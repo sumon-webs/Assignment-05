@@ -8,6 +8,12 @@ const allIssueContainer = document.getElementById("all-issues-container")
 const allOpenContainer = document.getElementById("all-open-container")
 const allClosedContainer = document.getElementById("all-closed-container")
 
+const issueModal = document.getElementById("issue_modal")
+
+const modalBox = document.getElementById("modal-box")
+
+const modalName = document.querySelector('.name')
+const modalStatus = document.querySelector('.statuss')
 
 
 const activeStatus = (id) => {
@@ -57,25 +63,81 @@ async function allIssues() {
 
 function createIssueDiv(issue) {
     const div = document.createElement("div");
+    div.setAttribute("onclick", `allIssuesModal(${issue.id})`)
     div.className = "bg-base-100 p-3 rounded-sm space-y-2 h-full shadow-sm border-t-4 " +
         (issue.status === "open" ? "border-green-500" : "border-purple-500");
     div.innerHTML = `
         <div class="flex justify-between">
             <i class="fa-regular ${issue.status === "open" ? "text-green-600  fa-solid fa-spinner" : "text-purple-500  fa-circle-check"}"></i>
-            <p class = " ${issue.priority === "high" ? 'badge badge-soft px-6 badge-error': issue.priority === 'medium'? 'badge badge-soft badge-warning':'badge bg-base-200 px-6'}">${issue.priority}</p>
+            <p class = " ${issue.priority === "high" ? 'badge badge-soft px-6 badge-error' : issue.priority === 'medium' ? 'badge badge-soft badge-warning' : 'badge bg-base-200 px-6'}">${issue.priority}</p>
         </div>
         <p class="text-xl font-bold">${issue.title}</p>
         <p class="line-clamp-2">${issue.description}</p>
-        <div class="flex gap-2">
-            <p>hh</p>
-            <p>hh</p>
-        </div>
+        <div class="levels-container flex gap-2"></div>
         <hr>
         <p>#${issue.author}</p>
-        <p>${issue.createdAt}</p>
+        <p>${issue.createdAt.slice(0, 10)}</p>
     `;
+    const levelContainer = div.querySelector(".levels-container")
+    level(issue.labels, levelContainer)
     return div;
 }
 
+
+function level(labels, container) {
+    labels.forEach(item => {
+        const btn = document.createElement("button")
+        btn.className = `${item === "bug" ? "badge badge-soft badge-error" : item === "help wanted" ? "badge badge-soft badge-warning" : item === 'good first issue' ? 'badge badge-soft badge-info' : "badge badge-soft badge-success"}`
+        btn.innerText = item
+        container.appendChild(btn)
+    })
+}
+
+async function allIssuesModal(id) {
+    modalBox.innerHTML = ''
+
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`)
+    const data = await res.json()
+    const dataContainer = data.data
+
+    const modal = document.createElement("div")
+    modal.className = " space-y-3"
+    modal.innerHTML = `
+    <h3 class="name text-2xl font-bold">${dataContainer.title}</h3>
+                <div class=" flex gap-2">
+                    <p class = "${dataContainer.status === "open" ?'badge badge-success':'badge badge-primary'}">${dataContainer.status}</p>
+                    <p>Open by: <span class="assignee">${dataContainer.assignee}</span></p>
+                    <p>${dataContainer.createdAt.slice(0, 10)}</p>
+                </div>
+                <div class="labels-modal-container">
+                    
+                </div>
+                <p >${dataContainer.description}</p>
+
+                <div class = " bg-base-200 p-3 grid grid-cols-2">
+                    <div>
+                        <p class="font-bold">Assignee</p>
+                        <p >${dataContainer.assignee}</p>
+                    </div>
+                    <div>
+                        <p class=" font-bold">Priority</p>
+                        <p class = " ${dataContainer.priority === "high" ? 'badge  px-6 badge-error' : dataContainer.priority === 'medium' ? 'badge  badge-warning' : 'badge badge-success bg-base-200 px-6'}">${dataContainer.priority}</p>
+                    </div>
+                </div>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn">Close</button>
+                    </form>
+                </div>
+    `
+    
+    modalBox.appendChild(modal)
+    
+    const labelModalContainer = document.querySelector(".labels-modal-container")
+    level(dataContainer.labels, labelModalContainer)
+
+    issueModal.showModal()
+}
 
 allIssues()
