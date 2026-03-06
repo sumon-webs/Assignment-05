@@ -17,9 +17,54 @@
     <title>Issue tracker</title>
 </head>
 
-<body>
-    
-    <h1>Hello</h1>
+<body class=" bg-base-200">
+
+    <!-- Navbar -->
+    <nav class="bg-base-100 shadow-sm">
+        <div class="navbar  max-w-screen-2xl mx-auto ">
+            <div class="flex-1 flex space-x-3">
+                <div><img class=" w-9 h-9" src="./assets/github-logo.png" alt=""></div>
+                <a class=" text-xl font-semibold">GitHub Issues Tracker</a>
+            </div>
+            <div class="flex gap-2">
+                <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+                <div class="dropdown dropdown-end">
+                    <button class="btn btn-primary">+ New Issue</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class=" max-w-screen-xl mx-auto">
+        <section>
+            <div class=" bg-white shadow-sm rounded-sm mt-6 p-3 space-x-3">
+                <button onclick="activeStatus('all-btn')" id="all-btn" class=" btn btn-primary px-10 ">All</button>
+                <button onclick="activeStatus('open-btn')" id="open-btn" class=" btn px-10">Open</button>
+                <button onclick="activeStatus('closed-btn')" id="closed-btn" class=" btn px-10">Closed</button>
+            </div>
+        </section>
+
+        <section class=" bg-gray-50 mt-5 shadow-sm">
+            <div class=" bg-base-100 shadow-sm flex justify-between p-4 rounded-sm">
+                <div class=" flex gap-2">
+                    <div class=" flex justify-center items-center"><img class="" src="./assets/Aperture.png" alt=""></div>
+                    <div>
+                        <p class=" text-2xl font-bold"><span id="issue-count">0</span> Issues</p>
+                        <p class=" text-gray-500"> Track and manage your project issues</p>
+                    </div>
+                </div>
+                <div class=" flex gap-2">
+                    <p><i class="fa-solid fa-circle text-green-500"></i> Open</p>
+                    <p><i class="fa-solid fa-circle text-purple-500"></i> Closed</p>
+                </div>
+            </div>
+
+            <div id="all-issues-container" class=" grid grid-cols-4 p-3 gap-3">
+                
+            </div>
+        </section>
+
+    </main>
 
     <script src="./JS/home.js"></script>
 </body>
