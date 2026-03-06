@@ -18,7 +18,39 @@
 </head>
 
 <body>
+    <!-- log in part -->
+    <section class=" flex justify-center items-center min-h-screen">
+        <fieldset class="fieldset  rounded-box w-md shadow-md p-4">
+            <div class=" text-center">
+                <img class=" mx-auto" src="./assets/github-logo.png" alt="">
+                <p class=" text-2xl font-semibold">GitHub Issues Tracker</p>
+                <p class=" text-gray-400">Sign in to manage your issues</p>
+            </div>
 
+            <label class="label text-xl text-black ">Username</label>
+            <input type="text" class="input w-full rounded-sm" placeholder="Enter Username" />
+            <p class="  text-blue-500">Default: admin</p>
+
+            <label class="label text-xl text-black">Password</label>
+            <input type="password" class="input w-full rounded-sm" placeholder="Enter Password" />
+            <p class="  text-blue-500">Default: admin123</p>
+
+            <button id="sign-in-btn" class="btn btn-primary mt-4">Sign in</button>
+            <div class="flex items-center gap-3">
+                <hr class="flex-1 border-gray-300">
+                <span>OR</span>
+                <hr class="flex-1 border-gray-300">
+            </div>
+
+            <div class=" text-center">
+                <p class=" text-gray-400">Demo Credentials:</p>
+                <div class=" bg-base-200 py-4"> 
+                    <p><span class=" font-bold">Username:</span> admin </p>
+                    <p> <span class=" font-bold">Password:</span> admin123</p>
+                </div>
+            </div>
+        </fieldset>
+    </section>
 
     <script src="./script.js"></script>
 </body>
