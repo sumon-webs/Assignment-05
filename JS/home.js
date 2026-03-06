@@ -105,7 +105,7 @@ async function allIssuesModal(id) {
     modal.innerHTML = `
     <h3 class="name text-2xl font-bold">${dataContainer.title}</h3>
                 <div class=" flex gap-2">
-                    <p class = "${dataContainer.status === "open" ?'badge badge-success':'badge badge-primary'}">${dataContainer.status}</p>
+                    <p class = "${dataContainer.status === "open" ? 'badge badge-success' : 'badge badge-primary'}">${dataContainer.status}</p>
                     <p>Open by: <span class="assignee">${dataContainer.assignee}</span></p>
                     <p>${dataContainer.createdAt.slice(0, 10)}</p>
                 </div>
@@ -131,13 +131,39 @@ async function allIssuesModal(id) {
                     </form>
                 </div>
     `
-    
+
     modalBox.appendChild(modal)
-    
+
     const labelModalContainer = document.querySelector(".labels-modal-container")
     level(dataContainer.labels, labelModalContainer)
 
     issueModal.showModal()
 }
 
-allIssues()
+document.getElementById("search-btn").addEventListener("click", async () => {
+    const input = document.getElementById("input-text");
+    const inputValue = input.value.trim().toLowerCase();
+
+    const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
+    const data = await res.json();
+    const allData = data.data;
+
+    const filteredData = allData.filter(issue => issue.title.toLowerCase().includes(inputValue));
+
+    filteredData.forEach(issue => {
+        allIssueContainer.innerHTML = ''
+        allOpenContainer.innerHTML =''
+        allClosedContainer.innerHTML = ''
+
+        issueDiv = createIssueDiv(issue)
+        allIssueContainer.appendChild(issueDiv)
+        if (issue.status === "open") {
+            allOpenContainer.appendChild(createIssueDiv(issue));
+        } else if (issue.status === "closed") {
+            allClosedContainer.appendChild(createIssueDiv(issue));
+        }
+
+        issueCount.innerText = allIssueContainer.children.length
+    })
+})
+    allIssues()
