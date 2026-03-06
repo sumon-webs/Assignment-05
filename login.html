@@ -14,7 +14,7 @@
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <title>Issue tracker</title>
+    <title>Log in | Issue tracker</title>
 </head>
 
 <body>
@@ -28,11 +28,11 @@
             </div>
 
             <label class="label text-xl text-black ">Username</label>
-            <input type="text" class="input w-full rounded-sm" placeholder="Enter Username" />
+            <input id="user-name-input" type="text" class="input w-full rounded-sm" placeholder="Enter Username" />
             <p class="  text-blue-500">Default: admin</p>
 
             <label class="label text-xl text-black">Password</label>
-            <input type="password" class="input w-full rounded-sm" placeholder="Enter Password" />
+            <input id="password-input" type="password" class="input w-full rounded-sm" placeholder="Enter Password" />
             <p class="  text-blue-500">Default: admin123</p>
 
             <button id="sign-in-btn" class="btn btn-primary mt-4">Sign in</button>
@@ -52,7 +52,7 @@
         </fieldset>
     </section>
 
-    <script src="./script.js"></script>
+    <script src="./JS/login.js"></script>
 </body>
 
 </html>
