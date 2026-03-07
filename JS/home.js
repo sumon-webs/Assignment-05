@@ -17,23 +17,25 @@ const modalStatus = document.querySelector('.statuss')
 
 const snipperSection = document.getElementById("snipper-section")
 
-let allData = []
 
-const activeStatus = (id) => {
-    snipper(true)
-
+const activeStatus = async (id) => {
     allBtn.classList.remove("btn-primary")
     openBtn.classList.remove("btn-primary")
     closeBtn.classList.remove("btn-primary")
 
     document.getElementById(id).classList.add("btn-primary")
+
+    await allIssues();
+
     if (id === "open-btn") {
         allIssueContainer.classList.add("hidden")
         allOpenContainer.classList.remove("hidden")
+        allClosedContainer.classList.add("hidden")
         issueCount.innerText = allOpenContainer.children.length
     } else if (id === "all-btn") {
         allIssueContainer.classList.remove("hidden")
         allOpenContainer.classList.add("hidden")
+        allClosedContainer.classList.add("hidden") 
         issueCount.innerText = allIssueContainer.children.length
     } else if (id === "closed-btn") {
         allClosedContainer.classList.remove("hidden")
@@ -41,15 +43,12 @@ const activeStatus = (id) => {
         allOpenContainer.classList.add("hidden")
         issueCount.innerText = allClosedContainer.children.length
     }
-     setTimeout(() => {
-        snipper(false) 
-    }, 300) 
 }
 
-function snipper (id) {
-    if(id === true) {
+function snipper(id) {
+    if (id === true) {
         snipperSection.classList.remove("hidden")
-    }else if (id === false) {
+    } else if (id === false) {
         snipperSection.classList.add("hidden")
     }
 }
@@ -69,14 +68,13 @@ async function allIssues() {
 
         if (issue.status === "open") {
             allOpenContainer.appendChild(createIssueDiv(issue));
-            snipper(false)
         } else if (issue.status === "closed") {
             allClosedContainer.appendChild(createIssueDiv(issue));
         }
-        snipper(false)
     });
 
     issueCount.innerText = allIssueContainer.children.length;
+    snipper(false)
 }
 
 function createIssueDiv(issue) {
@@ -152,7 +150,7 @@ async function allIssuesModal(id) {
 
     modalBox.appendChild(modal)
 
-    const labelModalContainer = document.querySelector(".labels-modal-container")
+    const labelModalContainer = modal.querySelector(".labels-modal-container")
     level(dataContainer.labels, labelModalContainer)
 
     issueModal.showModal()
@@ -168,7 +166,7 @@ document.getElementById("search-btn").addEventListener("click", async () => {
 
     const filteredData = allData.filter(issue => issue.title.toLowerCase().includes(inputValue));
     allIssueContainer.innerHTML = ''
-    allOpenContainer.innerHTML =''
+    allOpenContainer.innerHTML = ''
     allClosedContainer.innerHTML = ''
 
     filteredData.forEach(issue => {
@@ -184,4 +182,4 @@ document.getElementById("search-btn").addEventListener("click", async () => {
     issueCount.innerText = allIssueContainer.children.length
 
 })
-    allIssues()
+allIssues()
