@@ -27,7 +27,8 @@
             </div>
             <div class="flex gap-2">
                 <div>
-                    <input id="input-text" type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto " />
+                    <input id="input-text" type="text" placeholder="Search"
+                        class="input input-bordered w-24 md:w-auto " />
                     <button id="search-btn" class="btn">Search</button>
                 </div>
                 <div class="dropdown dropdown-end">
@@ -54,6 +55,8 @@
             </div>
         </section>
 
+
+
         <section class=" bg-gray-50 mt-5 shadow-sm">
             <div class=" bg-base-100 shadow-sm flex justify-between p-4 rounded-sm">
                 <div class=" flex gap-2">
@@ -69,7 +72,9 @@
                     <p><i class="fa-solid fa-circle text-purple-500"></i> Closed</p>
                 </div>
             </div>
-
+            <div id="snipper-section" class=" hidden flex justify-center py-9">
+                <span class="loading loading-spinner loading-xl"></span>
+            </div>
             <div id="all-issues-container" class=" grid grid-cols-4 p-3 gap-3">
 
             </div>

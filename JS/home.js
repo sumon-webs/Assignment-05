@@ -15,8 +15,13 @@ const modalBox = document.getElementById("modal-box")
 const modalName = document.querySelector('.name')
 const modalStatus = document.querySelector('.statuss')
 
+const snipperSection = document.getElementById("snipper-section")
+
+let allData = []
 
 const activeStatus = (id) => {
+    snipper(true)
+
     allBtn.classList.remove("btn-primary")
     openBtn.classList.remove("btn-primary")
     closeBtn.classList.remove("btn-primary")
@@ -36,11 +41,22 @@ const activeStatus = (id) => {
         allOpenContainer.classList.add("hidden")
         issueCount.innerText = allClosedContainer.children.length
     }
+     setTimeout(() => {
+        snipper(false) 
+    }, 300) 
 }
 
-
+function snipper (id) {
+    if(id === true) {
+        snipperSection.classList.remove("hidden")
+    }else if (id === false) {
+        snipperSection.classList.add("hidden")
+    }
+}
 
 async function allIssues() {
+    snipper(true)
+
     allIssueContainer.innerHTML = "";
     allOpenContainer.innerHTML = "";
     allClosedContainer.innerHTML = "";
@@ -53,9 +69,11 @@ async function allIssues() {
 
         if (issue.status === "open") {
             allOpenContainer.appendChild(createIssueDiv(issue));
+            snipper(false)
         } else if (issue.status === "closed") {
             allClosedContainer.appendChild(createIssueDiv(issue));
         }
+        snipper(false)
     });
 
     issueCount.innerText = allIssueContainer.children.length;
@@ -149,11 +167,11 @@ document.getElementById("search-btn").addEventListener("click", async () => {
     const allData = data.data;
 
     const filteredData = allData.filter(issue => issue.title.toLowerCase().includes(inputValue));
+    allIssueContainer.innerHTML = ''
+    allOpenContainer.innerHTML =''
+    allClosedContainer.innerHTML = ''
 
     filteredData.forEach(issue => {
-        allIssueContainer.innerHTML = ''
-        allOpenContainer.innerHTML =''
-        allClosedContainer.innerHTML = ''
 
         issueDiv = createIssueDiv(issue)
         allIssueContainer.appendChild(issueDiv)
@@ -162,8 +180,8 @@ document.getElementById("search-btn").addEventListener("click", async () => {
         } else if (issue.status === "closed") {
             allClosedContainer.appendChild(createIssueDiv(issue));
         }
-
-        issueCount.innerText = allIssueContainer.children.length
     })
+    issueCount.innerText = allIssueContainer.children.length
+
 })
     allIssues()
