@@ -12,9 +12,6 @@ const issueModal = document.getElementById("issue_modal")
 
 const modalBox = document.getElementById("modal-box")
 
-const modalName = document.querySelector('.name')
-const modalStatus = document.querySelector('.statuss')
-
 const snipperSection = document.getElementById("snipper-section")
 
 
